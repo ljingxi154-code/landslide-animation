@@ -5,7 +5,7 @@
 ## 文件
 
 - `index.html` — 单文件页面，无外部依赖
-- `flow.gif` — 动画（9.2 MB）
+- `flow.gif` — 动画（6.4 MB）
 - `.nojekyll` — 告诉 GitHub Pages 不要用 Jekyll 处理
 
 ## 部署步骤
@@ -56,5 +56,5 @@ https://ljingxi154-code.github.io/landslide-animation/flow.gif
 ## 注意
 
 - GitHub Pages 在国内访问可能较慢或不稳定。如果评委主要在国内，建议同时部署到 Gitee Pages 或阿里云 OSS，或把 B 站/腾讯视频作为备用链接。
-- 首次打开需要下载 9.2 MB，之后浏览器会缓存。
+- 首次打开需要下载 6.4 MB，之后浏览器会缓存。
 - 页面点击画面可全屏，右上角可下载 GIF。
