@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>滑坡运动过程动力模拟 · 动态演示</title>
-<meta name="description" content="论文补充材料：滑坡运动过程动力模拟动画，t = 0.0 min 起随时间演化。">
-<meta property="og:title" content="滑坡运动过程动力模拟 · 动态演示">
-<meta property="og:description" content="论文补充材料：滑坡运动过程动力模拟动画。">
+<title>滑坡运动过程动力模拟 · Bingham / Voellmy 对比</title>
+<meta name="description" content="论文补充材料：Bingham 与 Voellmy 两种流变模型下的滑坡运动过程动力模拟动画。">
+<meta property="og:title" content="滑坡运动过程动力模拟 · Bingham / Voellmy 对比">
+<meta property="og:description" content="论文补充材料：Bingham 与 Voellmy 两种流变模型下的滑坡运动过程动力模拟动画。">
 <meta property="og:type" content="website">
 <style>
   * { box-sizing: border-box; }
@@ -38,11 +38,36 @@
     letter-spacing: .01em;
   }
   .sub {
-    margin: 0 0 20px;
+    margin: 0 0 4px;
     color: #71717a;
     font-size: 14px;
   }
   figure { margin: 0; }
+  .model { margin-top: 26px; }
+  .model:first-of-type { margin-top: 22px; }
+  .model-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .model-head h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: .01em;
+  }
+  .meta {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    color: #a1a1aa;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .meta a { color: #52525b; text-decoration: none; border-bottom: 1px dotted #a1a1aa; }
+  .meta a:hover { color: #18181b; border-bottom-color: #18181b; }
   .stage {
     position: relative;
     border-radius: 10px;
@@ -82,36 +107,13 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
   .caption {
-    margin: 12px 2px 0;
+    margin: 10px 2px 0;
     color: #71717a;
     font-size: 13px;
     line-height: 1.6;
   }
-  .actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 16px;
-  }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
-    border-radius: 8px;
-    border: 1px solid #d4d4d8;
-    background: #fff;
-    color: #18181b;
-    font: inherit;
-    font-size: 14px;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  .btn:hover { background: #f4f4f5; }
-  .btn.primary { background: #18181b; border-color: #18181b; color: #fff; }
-  .btn.primary:hover { background: #27272a; }
   footer {
-    margin-top: 18px;
+    margin-top: 22px;
     padding-top: 14px;
     border-top: 1px solid #f0f0f1;
     color: #a1a1aa;
@@ -124,32 +126,46 @@
   @media (max-width: 560px) {
     .card { padding: 20px 16px 16px; border-radius: 12px; }
     body { padding: 12px; }
+    .model-head { flex-direction: column; gap: 4px; }
   }
 </style>
 </head>
 <body>
   <main class="card">
     <h1>滑坡运动过程动力模拟</h1>
-    <p class="sub">Landslide run-out simulation · 动态演示（论文补充材料）</p>
+    <p class="sub">Bingham / Voellmy 两种流变模型对比 · 动态演示（论文补充材料）</p>
 
-    <figure>
-      <div class="stage" id="stage">
-        <img id="anim" src="flow.gif" alt="滑坡运动过程动力模拟动画，从 t = 0.0 min 开始随时间演化" decoding="async">
-        <div class="loading" id="loading">
+    <figure class="model">
+      <div class="model-head">
+        <h2>Bingham 流变模型</h2>
+        <span class="meta"><span>6.4 MB</span><a href="flow.gif" download>下载 GIF</a></span>
+      </div>
+      <div class="stage">
+        <img src="flow.gif" alt="Bingham 流变模型下的滑坡运动过程动画" decoding="async">
+        <div class="loading">
           <div class="spinner" aria-hidden="true"></div>
           <span>动画加载中…</span>
           <small>6.4 MB，请稍候</small>
         </div>
       </div>
-      <figcaption class="caption">
-        动画自动循环播放，左上角为模拟时间 <em>t</em>。点击画面或下方按钮可全屏观看。
-      </figcaption>
+      <figcaption class="caption">左上角为模拟时间 <em>t</em>。点击画面可全屏观看。</figcaption>
     </figure>
 
-    <div class="actions">
-      <button class="btn primary" id="fullscreen" type="button">全屏观看</button>
-      <a class="btn" href="flow.gif" download>下载 GIF</a>
-    </div>
+    <figure class="model">
+      <div class="model-head">
+        <h2>Voellmy 流变模型</h2>
+        <span class="meta"><span>4.5 MB</span><a href="voellmy.gif" download>下载 GIF</a></span>
+      </div>
+      <div class="stage">
+        <img src="voellmy.gif" alt="Voellmy 流变模型下的滑坡运动过程动画" decoding="async">
+        <div class="loading">
+          <div class="spinner" aria-hidden="true"></div>
+          <span>动画加载中…</span>
+          <small>4.5 MB，请稍候</small>
+        </div>
+      </div>
+      <figcaption class="caption">左上角为模拟时间 <em>t</em>。点击画面可全屏观看。</figcaption>
+    </figure>
 
     <footer>
       <span>Supplementary Material</span>
@@ -159,26 +175,27 @@
 
 <script>
   (function () {
-    var stage = document.getElementById('stage');
-    var img = document.getElementById('anim');
-    var loading = document.getElementById('loading');
+    document.querySelectorAll('.model').forEach(function (model) {
+      var stage = model.querySelector('.stage');
+      var img = model.querySelector('img');
+      var loading = model.querySelector('.loading');
 
-    function ready() { loading.classList.add('hidden'); }
-    if (img.complete && img.naturalWidth > 0) ready();
-    img.addEventListener('load', ready);
-    img.addEventListener('error', function () {
-      loading.innerHTML = '<span>动画加载失败</span><small>请刷新页面或下载 GIF</small>';
-    });
+      function ready() { loading.classList.add('hidden'); }
+      if (img.complete && img.naturalWidth > 0) ready();
+      img.addEventListener('load', ready);
+      img.addEventListener('error', function () {
+        loading.innerHTML = '<span>动画加载失败</span><small>请刷新页面或下载 GIF</small>';
+      });
 
-    function toggleFullscreen() {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      } else if (stage.requestFullscreen) {
-        stage.requestFullscreen();
+      function toggleFullscreen() {
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        } else if (stage.requestFullscreen) {
+          stage.requestFullscreen();
+        }
       }
-    }
-    document.getElementById('fullscreen').addEventListener('click', toggleFullscreen);
-    img.addEventListener('click', toggleFullscreen);
+      stage.addEventListener('click', toggleFullscreen);
+    });
   })();
 </script>
 </body>

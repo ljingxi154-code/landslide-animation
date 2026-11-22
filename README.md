@@ -5,7 +5,8 @@
 ## 文件
 
 - `index.html` — 单文件页面，无外部依赖
-- `flow.gif` — 动画（6.4 MB）
+- `flow.gif` — Bingham 流变模型动画（6.4 MB）
+- `voellmy.gif` — Voellmy 流变模型动画（4.5 MB）
 - `.nojekyll` — 告诉 GitHub Pages 不要用 Jekyll 处理
 
 ## 部署步骤
@@ -50,7 +51,10 @@ https://ljingxi154-code.github.io/landslide-animation/
 动画直链（用于论文超链接 / 二维码）：
 
 ```
-https://ljingxi154-code.github.io/landslide-animation/flow.gif
+Bingham（Pages）：https://ljingxi154-code.github.io/landslide-animation/flow.gif
+Voellmy（Pages）：https://ljingxi154-code.github.io/landslide-animation/voellmy.gif
+Bingham（raw）  ：https://raw.githubusercontent.com/ljingxi154-code/landslide-animation/main/flow.gif
+Voellmy（raw）  ：https://raw.githubusercontent.com/ljingxi154-code/landslide-animation/main/voellmy.gif
 ```
 
 ## 注意
