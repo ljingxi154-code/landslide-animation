@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>滑坡运动过程动力模拟 · 动态演示</title>
+<meta name="description" content="论文补充材料：滑坡运动过程动力模拟动画，t = 0.0 min 起随时间演化。">
+<meta property="og:title" content="滑坡运动过程动力模拟 · 动态演示">
+<meta property="og:description" content="论文补充材料：滑坡运动过程动力模拟动画。">
+<meta property="og:type" content="website">
+<style>
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #f4f4f5;
+    color: #18181b;
+    -webkit-font-smoothing: antialiased;
+  }
+  .card {
+    width: min(980px, 100%);
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 28px 20px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .05), 0 12px 32px rgba(0, 0, 0, .08);
+  }
+  h1 {
+    margin: 0 0 6px;
+    font-size: clamp(20px, 3vw, 27px);
+    font-weight: 650;
+    letter-spacing: .01em;
+  }
+  .sub {
+    margin: 0 0 20px;
+    color: #71717a;
+    font-size: 14px;
+  }
+  figure { margin: 0; }
+  .stage {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #e4e4e7;
+    isolation: isolate;
+  }
+  .stage img {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: zoom-in;
+  }
+  .stage:fullscreen { border-radius: 0; background: #000; display: flex; align-items: center; justify-content: center; }
+  .stage:fullscreen img { width: 100%; max-height: 100vh; object-fit: contain; cursor: zoom-out; }
+  .loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #e4e4e7;
+    color: #52525b;
+    font-size: 14px;
+    transition: opacity .3s ease;
+  }
+  .loading small { color: #a1a1aa; font-size: 12px; }
+  .loading.hidden { opacity: 0; pointer-events: none; }
+  .spinner {
+    width: 26px; height: 26px;
+    border: 3px solid #d4d4d8;
+    border-top-color: #52525b;
+    border-radius: 50%;
+    animation: spin .9s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .caption {
+    margin: 12px 2px 0;
+    color: #71717a;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid #d4d4d8;
+    background: #fff;
+    color: #18181b;
+    font: inherit;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn:hover { background: #f4f4f5; }
+  .btn.primary { background: #18181b; border-color: #18181b; color: #fff; }
+  .btn.primary:hover { background: #27272a; }
+  footer {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #f0f0f1;
+    color: #a1a1aa;
+    font-size: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: space-between;
+  }
+  @media (max-width: 560px) {
+    .card { padding: 20px 16px 16px; border-radius: 12px; }
+    body { padding: 12px; }
+  }
+</style>
+</head>
+<body>
+  <main class="card">
+    <h1>滑坡运动过程动力模拟</h1>
+    <p class="sub">Landslide run-out simulation · 动态演示（论文补充材料）</p>
+
+    <figure>
+      <div class="stage" id="stage">
+        <img id="anim" src="flow.gif" alt="滑坡运动过程动力模拟动画，从 t = 0.0 min 开始随时间演化" decoding="async">
+        <div class="loading" id="loading">
+          <div class="spinner" aria-hidden="true"></div>
+          <span>动画加载中…</span>
+          <small>9.2 MB，请稍候</small>
+        </div>
+      </div>
+      <figcaption class="caption">
+        动画自动循环播放，左上角为模拟时间 <em>t</em>。点击画面或下方按钮可全屏观看。
+      </figcaption>
+    </figure>
+
+    <div class="actions">
+      <button class="btn primary" id="fullscreen" type="button">全屏观看</button>
+      <a class="btn" href="flow.gif" download>下载 GIF</a>
+    </div>
+
+    <footer>
+      <span>Supplementary Material</span>
+      <span>如页面加载缓慢，可下载 GIF 后本地查看</span>
+    </footer>
+  </main>
+
+<script>
+  (function () {
+    var stage = document.getElementById('stage');
+    var img = document.getElementById('anim');
+    var loading = document.getElementById('loading');
+
+    function ready() { loading.classList.add('hidden'); }
+    if (img.complete && img.naturalWidth > 0) ready();
+    img.addEventListener('load', ready);
+    img.addEventListener('error', function () {
+      loading.innerHTML = '<span>动画加载失败</span><small>请刷新页面或下载 GIF</small>';
+    });
+
+    function toggleFullscreen() {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else if (stage.requestFullscreen) {
+        stage.requestFullscreen();
+      }
+    }
+    document.getElementById('fullscreen').addEventListener('click', toggleFullscreen);
+    img.addEventListener('click', toggleFullscreen);
+  })();
+</script>
+</body>
+</html>
